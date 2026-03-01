@@ -1,43 +1,39 @@
-"use client"
-import React, { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+"use client";
 
-export function LoginPage({ onSwitchToSignup }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import LoginComponent from "./LoginComponent";
+
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
-    // TODO: Replace with actual Supabase auth
     try {
-      // const { data, error } = await supabase.auth.signInWithPassword({
-      //   email,
-      //   password,
-      // });
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login attempt:', { email, password });
-
+      // TODO: Replace with real auth logic
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Login attempt:", { email, password });
     } catch (err) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleLogin();
     }
   };
@@ -45,53 +41,55 @@ export function LoginPage({ onSwitchToSignup }) {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        {/* Logo/Brand */}
+        {/* Logo */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Daywise</h1>
-          <p className="text-gray-600">Welcome back! Sign in to continue learning.</p>
+          <p className="text-gray-600">
+            Welcome back! Sign in to continue learning.
+          </p>
         </div>
 
-        {/* Login Form */}
+        {/* Login Card */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
           <div className="space-y-6">
-            {/* Error Message */}
+            {/* Error */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
-            {/* Email Input */}
+            {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
               <input
-                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
                 placeholder="you@example.com"
               />
             </div>
 
-            {/* Password Input */}
+            {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
+
               <div className="relative">
                 <input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition pr-12"
                   placeholder="••••••••"
                 />
+
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -104,30 +102,33 @@ export function LoginPage({ onSwitchToSignup }) {
 
             {/* Forgot Password */}
             <div className="text-right">
-              <a href="#" className="text-sm text-blue-600 hover:text-blue-700">
+              <Link
+                href="/auth/forgot-password"
+                className="text-sm text-blue-600 hover:text-blue-700"
+              >
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
-            {/* Submit Button */}
+            {/* Login Button */}
             <button
               onClick={handleLogin}
               disabled={loading}
               className="w-full bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? "Signing in..." : "Sign In"}
             </button>
           </div>
 
-          {/* Divider */}
+          {/* Signup Redirect */}
           <div className="mt-6 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
-            <button
-              onClick={onSwitchToSignup}
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/auth/signup"
               className="text-blue-600 hover:text-blue-700 font-medium"
             >
               Sign up
-            </button>
+            </Link>
           </div>
         </div>
       </div>

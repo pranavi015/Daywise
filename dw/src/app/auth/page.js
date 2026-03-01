@@ -1,8 +1,8 @@
-// src/app/auth/AuthDemo.js
-"use client"
-import React, { useState } from 'react';
-import { LoginPage } from './login/page';
-import { SignupPage } from './signup/page';
+"use client";
+
+import { useState } from "react";
+import LoginComponent from "./login/LoginComponent";
+import SignupComponent from "./signup/SignupComponent";
 
 export default function AuthDemo() {
   const [showLogin, setShowLogin] = useState(true);
@@ -10,9 +10,9 @@ export default function AuthDemo() {
   return (
     <div>
       {showLogin ? (
-        <LoginPage onSwitchToSignup={() => setShowLogin(false)} />
+        <LoginComponent onSwitchToSignup={() => setShowLogin(false)} />
       ) : (
-        <SignupPage onSwitchToLogin={() => setShowLogin(true)} />
+        <SignupComponent onSwitchToLogin={() => setShowLogin(true)} />
       )}
     </div>
   );

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { Calendar, TrendingUp, Moon, Sun } from "lucide-react";
